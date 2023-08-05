@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="items">
+  <div class="items" onmousedown="startDrag(event)" onmousemove="drag(event)" onmouseup="endDrag()">
     <div class="item item1" draggable="true">01</div>
     <div class="item item2" draggable="true">02</div>
     <div class="item item3" draggable="true">>03</div>
@@ -35,7 +35,26 @@
   </div>
 
 <script>
-//Your code goes here 
+  let isDragging = false;
+  let startX, scrollLeft;
+
+  function startDrag(event) {
+    isDragging = true;
+    startX = event.clientX;
+    scrollLeft = event.target.scrollLeft;
+    event.target.classList.add('active');
+  }
+
+  function drag(event) {
+    if (!isDragging) return;
+    const walk = (event.clientX - startX) * 3;
+    event.target.scrollLeft = scrollLeft - walk;
+  }
+
+  function endDrag() {
+    isDragging = false;
+    document.querySelector('.items').classList.remove('active');
+  }
 </script>
 
   </body>
